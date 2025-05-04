@@ -7,9 +7,9 @@
     <style>
     .window {
         position: relative;
+        background-color: #ccc; /* Replaced background image with solid color */
         width: 100%;
-        height: 300px;
-        background-color: black;
+        height: 500px;
         border: 2px solid red;
         display: flex;
         justify-content: center;
@@ -17,14 +17,44 @@
         overflow: hidden;
     }
     body {
-        background-color: black;
+        background-color: rgb(217, 223, 222);
     }
     .obstaculo {
         position: absolute;
         bottom: 0;
-        width: 50px;
+        width: 80px;
         right: -50px;
         animation: obstaculoAnimation 4s linear;
+    }
+    .monster {
+        position: absolute;
+        bottom: 0;
+        width: 50px;
+        right: -50px;
+        color: red;
+        animation: monsterAnimation 7s linear;
+    }
+    @keyframes monsterAnimation {
+        0% {
+            right: -50px;
+            transform: translateX(0);
+        }
+        40% {
+            right: 10%;
+            transform: translateX(-10%);
+        }
+        60% {
+            right: 50%;
+            transform: translateX(-50%);
+        }
+        80% {
+            right: 50%;
+            transform: translateX(-50%);
+        }
+        100% {
+            right: -50px;
+            transform: translateX(0);
+        }
     }
     h1 {
         color: white;
@@ -33,78 +63,138 @@
         position: absolute;
         bottom: 0;
         color: red;
-        width: 40px;
-        left: 60px;
+        width: 120px;
+        left: 140px;
         transition: bottom 0.3s ease, font-size 0.3s ease;
     }
     .jump {
-        animation: jump 800ms ease-out;
+        animation: jump 800ms ease-in-out;
     }
     .jump-elevated {
-        animation: jumpElevated 800ms ease-out;
+        animation: jumpElevated 800ms ease-in-out;
     }
     @keyframes obstaculoAnimation {
-        from {
+        0% {
             right: -50px;
+            bottom: 0;
+            color: red;
         }
-        to {
+        15% {
+            bottom: 40px;
+            color: red;
+        }
+        20% {
+            bottom: 20px;
+            color: blue;
+        }
+        25% {
+            bottom: 40px;
+            color: blue;
+        }
+        32% {
+            bottom: 20px;
+            color: purple;
+        }
+        37% {
+            bottom: 0;
+            color: pink;
+        }
+        43% {
+            bottom: 40px;
+            color: yellow;
+        }
+        51% {
+            bottom: 20px;
+            color: green;
+        }
+        55% {
+            bottom: 0;
+            color: red;
+        }
+        67% {
+            color: blue;
+        }
+        73% {
+            color: purple;
+        }
+        80% {
+            color: yellow;
+        }
+        100% {
             right: 107%;
+            bottom: 0;
+            color: white;
         }
     }
     @keyframes jump {
         0% {
             bottom: 0;
+            transform: scale(1);
         }
         50% {
-            bottom: 150px;
+            bottom: 130px;
+            transform: scale(1.05);
         }
         70% {
-          bottom: 150px;
-    }
+            bottom: 130px;
+            transform: scale(1.03);
+        }
         80% {
-          bottom: 100px;
-    }
+            bottom: 80px;
+            transform: scale(1.02);
+        }
         100% {
             bottom: 0;
+            transform: scale(1);
         }
     }
     @keyframes jumpElevated {
         0% {
-            bottom: 120px;
+            bottom: 100px;
+            transform: scale(1);
         }
         50% {
-            bottom: 270px;
+            bottom: 220px;
+            transform: scale(1.05);
         }
         70% {
-            bottom: 270px;
-    }
+            bottom: 220px;
+            transform: scale(1.03);
+        }
         80% {
-            bottom: 220;
-    }
+            bottom: 180px;
+            transform: scale(1.02);
+        }
         100% {
-            bottom: 120px;
+            bottom: 80px;
+            transform: scale(1);
         }
     }
     .gameOver {
         position: absolute;
         display: none;
-        animation: gameOverAnimation 1500ms ease-out;
+        animation: gameOverAnimation 2s ease-out;
     }
     @keyframes gameOverAnimation {
-        0%{
-          top: 0;
+        0% {
+            top: 0;
+            opacity: 0;
         }
         40% {
-          top: 20px;
+            top: 20px;
+            opacity: 0.4;
         }
         70% {
-          top: 60px;
+            top: 60px;
+            opacity: 0.7;
         }
         88% {
-          top: 80px;
+            top: 75px;
+            opacity: 0.9;
         }
         100% {
-          top: 90px;
+            top: 90px;
+            opacity: 1;
         }
     }
     .textGameOver {
@@ -115,32 +205,138 @@
         width: 50px;
         position: absolute;
         right: -50px;
-        
         animation: portalAnimation 1800ms linear;
     }
     @keyframes portalAnimation {
         0% {
-            right: 0;
+            right: -50px;
             bottom: 0;
+            transform: scale(1);
+        }
+        10% {
+            bottom: 70px;
+            transform: scale(1.1);
         }
         50% {
             right: 40%;
             bottom: 23%;
+            transform: scale(1.05);
         }
-        10% {
-            bottom: 70px;
-    }
         100% {
             right: 107%;
             bottom: 0;
+            transform: scale(1);
+        }
+    }
+    .scoreContainer {
+        color: black;
+        width: 180px;
+        display: flex;
+        position: absolute;
+        background-color: white;
+        border: solid red;
+        justify-content: start;
+        height: 60px;
+        top: 0px;
+        left: 0px;
+    }
+    .bird {
+        color: yellow;
+        position: absolute;
+        bottom: 0;
+        right: -50px;
+        animation: birdAnimation 6s linear;
+        display: none;
+        cursor: pointer;
+    }
+    @keyframes birdAnimation {
+        0% {
+            right: -50px;
+            bottom: 0;
+            transform: scale(1);
+        }
+        40% {
+            right: 10%;
+            bottom: 110px;
+            transform: scale(1.05);
+        }
+        50% {
+            bottom: 30px;
+            color: red;
+            transform: scale(1.03);
+        }
+        55% {
+            bottom: 50px;
+            transform: scale(1.02);
+        }
+        60% {
+            right: 75%;
+            bottom: 160px;
+            transform: scale(1.05);
+        }
+        70% {
+            right: 80%;
+            bottom: 0;
+            transform: scale(1);
+        }
+        80% {
+            right: 104%;
+            bottom: 15px;
+            transform: scale(1.02);
+        }
+        100% {
+            right: 110%;
+            bottom: 0;
+            transform: scale(1);
+        }
+    }
+    .nuvemParalax {
+        position: absolute;
+        top: 0px;
+        right: -720px;
+        animation: nuvemAnimation 17s linear;
+        cursor: pointer;
+    }
+    @keyframes nuvemAnimation {
+        0% {
+            right: -720px;
+            top: 0;
+        }
+        100% {
+            right: 100%;
+            top: 0;
+        }
+    }
+    .nuvemParalax2 {
+        position: absolute;
+        right: 400px;
+        width: 520px;
+        top: 120px;
+        animation: nuvemAnimation2 9s linear;
+    }
+    @keyframes nuvemAnimation2 {
+        0% {
+            right: -520px;
+            top: 120px;
+        }
+        100% {
+            right: 100%;
+            top: 120px;
         }
     }
     </style>
 </head>
 <body>
     <div class="window">
-        <h1 class="player">Run</h1>
-        <h1 class="obstaculo">trashCan</h1>
+        <div class="scoreContainer">
+            <h2 class="scoreText">Score: 0</h2> 
+        </div>
+        <div class="nuvemParalax">cloud</div>
+        <div class="nuvemParalax2">cloud2</div>
+        <div class="player">run</div>
+        <div class="obstaculo">obstacle</div>
+        <h1 class="monster">monster</h1>
+        <h2 class="bird">bird</h2>
         <h1 class="portal">Portal</h1>
         <div class="gameOver">
             <h1 class="textGameOver">Game over</h1>
@@ -148,91 +344,164 @@
     </div>
 
     <script>
-        const player = document.querySelector('.player');
-        const obstaculo = document.querySelector('.obstaculo');
-        const gameOver = document.querySelector('.gameOver');
-        const portal = document.querySelector('.portal');
+    const player = document.querySelector('.player');
+    const obstaculo = document.querySelector('.obstaculo');
+    const monster = document.querySelector('.monster');
+    const bird = document.querySelector('.bird');
+    const gameOver = document.querySelector('.gameOver');
+    const portal = document.querySelector('.portal');
+    let lista_pontos = 0;
+    let pontosPortal = 0;
+    let pontosBird = 1;
+    const pontosCss = document.querySelector('.scoreText');
 
-        let isElevated = false;
-        let loop;
+    let isElevated = false;
+    let loop;
+    let obstaclePassed = false;
 
-        const jump = () => {
-            if (!player.classList.contains('jump') && !player.classList.contains('jump-elevated')) {
-                player.classList.add(isElevated ? 'jump-elevated' : 'jump');
-                setTimeout(() => {
-                    player.classList.remove('jump');
-                    player.classList.remove('jump-elevated');
-                }, 800);
-            }
-        };
+    const jump = () => {
+        if (!player.classList.contains('jump') && !player.classList.contains('jump-elevated')) {
+            player.classList.add(isElevated ? 'jump-elevated' : 'jump');
+            setTimeout(() => {
+                player.classList.remove('jump');
+                player.classList.remove('jump-elevated');
+            }, 800);
+        }
+    };
 
-        const tempoObstaculo = [1030, 6012, 9689, 150, 214, 4231];
-        const mostrarObstaculo = () => {
-            obstaculo.style.display = "block";
+    const monsterSpawn = [60000, 30000, 21050, 19320, 46478];
+    const mostrarMonstro = () => {
+        monster.style.display = "block";
+        monster.style.animation = "none";
+        monster.offsetHeight; // Trigger reflow
+        monster.style.animation = "monsterAnimation 7s linear";
+        bird.style.display = "block";
+        bird.style.animation = "birdAnimation 6s linear";
+        
+        setTimeout(() => {
+            const proximoTempo = monsterSpawn[Math.floor(Math.random() * monsterSpawn.length)];
+            setTimeout(mostrarMonstro, proximoTempo);
+        }, 4000);
+    };
+    mostrarMonstro();
+
+    const tempoObstaculo = [1030, 6012, 9689, 150, 214, 4231];
+    const mostrarObstaculo = () => {
+        obstaculo.style.display = "block";
+        obstaculo.style.animation = "none";
+        obstaculo.offsetHeight; // Trigger reflow
+        obstaculo.style.animation = "obstaculoAnimation 4s linear";
+        setTimeout(() => {
+            obstaculo.style.display = "none";
+            const proximoTempo = tempoObstaculo[Math.floor(Math.random() * tempoObstaculo.length)];
+            setTimeout(mostrarObstaculo, proximoTempo);
+        }, 4000);
+    };
+    mostrarObstaculo();
+
+    const temposPortal = [3770, 5807, 8305, 930, 592];
+    const mostrarPortal = () => {
+        portal.style.display = "block";
+        portal.style.animation = "none";
+        portal.offsetHeight; // Trigger reflow
+        portal.style.animation = "portalAnimation 1800ms linear";
+        setTimeout(() => {
+            portal.style.display = "none";
+            const proximoTempo = temposPortal[Math.floor(Math.random() * temposPortal.length)];
+            setTimeout(mostrarPortal, proximoTempo);
+        }, 1800);
+    };
+    mostrarPortal();
+
+    const playerTempoHigh = [10000, 6250, 8790, 9825, 7570, 40000];
+
+    loop = setInterval(() => {
+        const obstaculoPosition = obstaculo.offsetLeft;
+        const obstaculoBottom = parseInt(window.getComputedStyle(obstaculo).bottom);
+        const playerPosition = parseInt(window.getComputedStyle(player).bottom);
+        const portalPosition = portal.offsetLeft;
+        const portalBottom = parseInt(window.getComputedStyle(portal).bottom);
+        const birdPosition = bird.offsetLeft;
+        const birdBottom = parseInt(window.getComputedStyle(bird).bottom);
+        const monsterPosition = monster.offsetLeft;
+        const monsterBottom = parseInt(window.getComputedStyle(monster).bottom);
+
+        // Collision with obstacle
+        if (obstaculoPosition <= 175 && obstaculoPosition > 100 && Math.abs(playerPosition - obstaculoBottom) < 45) {
+            obstaculo.style.display = "none";
+            obstaculo.style.left = obstaculoPosition + "px";
+            player.style.display = "none";
+            gameOver.style.display = "flex";
+            portal.style.display = "none";
+            portal.style.color = "black";
+            obstaculo.style.color = "black";
+            monster.style.display = "none";
             obstaculo.style.animation = "none";
-            obstaculo.offsetHeight; // Trigger reflow
-            obstaculo.style.animation = "obstaculoAnimation 4s linear";
+            clearInterval(loop);
+        } else if (obstaculoPosition <= 140 && obstaculoPosition > 130 && Math.abs(playerPosition - obstaculoBottom) >= 55 && !obstaclePassed) {
+            lista_pontos += 3;
+            pontosCss.textContent = `Score: ${lista_pontos}`;
+            obstaclePassed = true;
+        } else if (obstaculoPosition <= 0) {
+            obstaclePassed = false;
+        }
+
+        // Collision with monster
+        if (monsterPosition <= 175 && monsterPosition > 100 && Math.abs(playerPosition - monsterBottom) < 45) {
+            monster.style.display = "none";
+            player.style.display = "none";
+            gameOver.style.display = "flex";
+            portal.style.display = "none";
+            obstaculo.style.display = "none";
+            obstaculo.style.animation = "none";
+            clearInterval(loop);
+        }
+
+        // Collision with bird
+        if (birdPosition <= 175 && birdPosition > 100 && Math.abs(playerPosition - birdBottom) < 45) {
+            bird.style.display = "none";
+            player.style.display = "none";
+            gameOver.style.display = "flex";
+            portal.style.display = "none";
+            obstaculo.style.display = "none";
+            obstaculo.style.animation = "none";
+            clearInterval(loop);
+        } else if (birdPosition <= 140 && birdPosition > 130 && Math.abs(playerPosition - birdBottom) >= 55 && !obstaclePassed) {
+            lista_pontos += 1;
+            pontosCss.textContent = `Score: ${lista_pontos}`;
+            obstaclePassed = true;
+        } else if (birdPosition <= 0) {
+            obstaclePassed = false;
+        }
+
+        // Collision with portal
+        if (portalPosition <= 175 && portalPosition > 100 && playerPosition < 65 && !isElevated) {
+            isElevated = true;
+            player.style.bottom = "120px";
+            player.style.fontSize = "20px";
+            obstaculo.style.bottom = "110px";
+            obstaculo.style.fontSize = "28px";
+            portal.style.display = "none";
+            const tempoDescida = playerTempoHigh[Math.floor(Math.random() * playerTempoHigh.length)];
             setTimeout(() => {
-                obstaculo.style.display = "none";
-                const proximoTempo = tempoObstaculo[Math.floor(Math.random() * tempoObstaculo.length)];
-                setTimeout(mostrarObstaculo, proximoTempo);
-            }, 4000); // Match animation duration
-        };
-        mostrarObstaculo();
+                if (isElevated) {
+                    player.style.bottom = "0";
+                    player.style.fontSize = "32px";
+                    obstaculo.style.bottom = "0";
+                    obstaculo.style.fontSize = "37px";
+                    isElevated = false;
+                }
+            }, tempoDescida);
+        } else if (portalPosition <= 140 && portalPosition > 130 && Math.abs(playerPosition - portalBottom) >= 55 && !obstaclePassed) {
+            lista_pontos += 5;
+            pontosCss.textContent = `Score: ${lista_pontos}`;
+            obstaclePassed = true;
+        } else if (portalPosition <= 0) {
+            obstaclePassed = false;
+        }
+    }, 10);
 
-        const temposPortal = [3770, 5807, 8305, 930, 592];
-        const mostrarPortal = () => {
-            portal.style.display = "block";
-            portal.style.animation = "none";
-            portal.offsetHeight; // Trigger reflow
-            portal.style.animation = "portalAnimation 1800ms linear";
-            setTimeout(() => {
-                portal.style.display = "none";
-                const proximoTempo = temposPortal[Math.floor(Math.random() * temposPortal.length)];
-                setTimeout(mostrarPortal, proximoTempo);
-            }, 1800); // Match animation duration
-        };
-        mostrarPortal();
-
-        const playerTempoHigh = [5000, 1000, 3000, 200, 100, 400];
-
-        loop = setInterval(() => {
-            const obstaculoPosition = obstaculo.offsetLeft;
-            const obstaculoBottom = parseInt(window.getComputedStyle(obstaculo).bottom);
-            const playerPosition = parseInt(window.getComputedStyle(player).bottom);
-            const portalPosition = portal.offsetLeft;
-
-            // Collision with obstacle (dies regardless of elevation)
-            if (obstaculoPosition <= 90 && obstaculoPosition > 0 && Math.abs(playerPosition - obstaculoBottom) < 55) {
-                obstaculo.style.animation = "none";
-                obstaculo.style.left = obstaculoPosition + "px";
-                player.style.display = "none";
-                gameOver.style.display = "flex";
-                portal.style.display = "none";
-                clearInterval(loop);
-            }
-
-            // Collision with portal
-            if (portalPosition <= 90 && portalPosition > 0 && playerPosition < 55 && !isElevated) {
-                isElevated = true;
-                player.style.bottom = "120px";
-                player.style.fontSize = "20px";
-                obstaculo.style.bottom = "120px";
-                portal.style.display = "none";
-                const tempoDescida = playerTempoHigh[Math.floor(Math.random() * playerTempoHigh.length)];
-                setTimeout(() => {
-                    if (isElevated) {
-                        player.style.bottom = "0";
-                        player.style.fontSize = "32px";
-                        obstaculo.style.bottom = "0";
-                        isElevated = false;
-                    }
-                }, tempoDescida);
-            }
-        }, 10);
-
-        document.addEventListener("keydown", jump);
+    document.addEventListener("keydown", jump);
     </script>
 </body>
 </html>
-
