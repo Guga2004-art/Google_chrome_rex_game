@@ -23,6 +23,7 @@ body {
     background-color: rgb(217, 223, 222);
 }
 .obstaculo {
+    Z-index:0;
     position: absolute;
     bottom: 0;
     width: 80px;
@@ -30,6 +31,7 @@ body {
     animation: obstaculoAnimation 4s linear; /* Adjusted duration for smoother flow */
 }
 .monster {
+    Z-index:0;
     position: absolute;
     bottom: 0;
     width: 50px;
@@ -173,7 +175,16 @@ h1 {
         transform: scale(1);
     }
 }
+.cortina {
+    Z-index:"1";
+    height:100%;
+    position: absolute;
+    width:100%;
+    background-color: red;
+    display: none;
+}
 .gameOver {
+    Z-index: "2";
     position: absolute;
     display: none;
     animation: gameOverAnimation 2s ease-out;
@@ -256,9 +267,10 @@ h1 {
     position: absolute;
     bottom: 0;
     right: -50px;
-    animation: birdAnimation 6s linear; /* Adjusted for smoother movement */
+    animation: birdAnimation 6s linear;
     display: none;
     cursor: pointer;
+    Z-index:0;
 }
 @keyframes birdAnimation {
     0% {
@@ -339,6 +351,8 @@ h1 {
 </head>
 <body>
     <div class="window">
+        <div class="cortina"></div>
+
         <div class="scoreContainer">
          <h2 class="scoreText">Score: 0</h2> 
         </div>
@@ -364,9 +378,11 @@ const monster = document.querySelector('.monster');
 const bird = document.querySelector('.bird');
 const gameOver = document.querySelector('.gameOver');
 const portal = document.querySelector('.portal');
+const nuvem = document.querySelector('nuvem')
+const nuvem2 = document.querySelector('nuvemParalax2')
 let lista_pontos = 0;
 let pontosPortal = 0;
-let pontosBird = 1;
+let pontosBird = 0;
 const pontosCss = document.querySelector('.scoreText');
 
 let isElevated = false;
@@ -413,7 +429,7 @@ const mostrarObstaculo = () => {
 };
 mostrarObstaculo();
     // spawn do portal timer
-const temposPortal = [3770, 5807, 8305, 930, 592];
+const temposPortal = [8770, 8807, 8305, 6730, 4592];
 const mostrarPortal = () => {
     portal.style.display = "block";
     portal.style.animation = "none";
@@ -427,7 +443,22 @@ const mostrarPortal = () => {
 };
 mostrarPortal();
 
-const playerTempoHigh = [10000, 6250, 8790, 9825, 7570, 40000];
+    // spawn do bird timer
+const temposBird = [1270, 3807, 4305, 2930, 6592];
+const mostrarBird = () => {
+    bird.style.display = "block";
+    bird.style.animation = "none";
+    bird.offsetHeight;
+    bird.style.animation = "birdAnimation 1800ms linear";
+    setTimeout(() => {
+        bird.style.display = "none";
+        const proximoTempo = temposBird[Math.floor(Math.random() * temposBird.length)];
+        setTimeout(mostrarBird, proximoTempo);
+    }, 6000);
+};
+mostrarBird();
+
+const playerTempoHigh = [10000, 6250, 8790, 9825, 7570, 4000];
 
 loop = setInterval(() => {
     const obstaculoPosition = obstaculo.offsetLeft;
@@ -446,11 +477,16 @@ loop = setInterval(() => {
         obstaculo.style.left = obstaculoPosition + "px";
         player.style.display = "none";
         gameOver.style.display = "flex";
+        
         portal.style.display = "none";
         portal.style.color = "black";
         obstaculo.style.color = "black";
         monster.style.display = "none";
         obstaculo.style.animation = "none";
+        bird.style.animation = "none";
+        portal.style.animation = "none";
+        nuvem.style.animation = "none";
+        nuvem2.style.animation = "none";
         clearInterval(loop);
     } else if (obstaculoPosition <= 140 && obstaculoPosition > 130 && Math.abs(playerPosition - obstaculoBottom) >= 55 && !obstaclePassed) {
         lista_pontos += 3;
@@ -481,7 +517,7 @@ loop = setInterval(() => {
         obstaculo.style.animation = "none";
         clearInterval(loop);
     } else if (birdPosition <= 140 && birdPosition > 130 && Math.abs(playerPosition - birdBottom) >= 55 && !obstaclePassed) {
-        lista_pontos += 1;
+        lista_pontos += 10;
         pontosCss.textContent = `Score: ${lista_pontos}`;
         obstaclePassed = true;
     } else if (birdPosition <= 0) {
@@ -514,6 +550,7 @@ loop = setInterval(() => {
         obstaclePassed = false;
     }
 }, 10);
+
 
 document.addEventListener("keydown", jump);
 </script>
